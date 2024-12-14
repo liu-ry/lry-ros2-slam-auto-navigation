@@ -107,5 +107,3 @@ Contributions are welcome. If you find a bug or have a feature request, please o
 - ROS 2 [tf2](https://docs.ros.org/en/humble/Tutorials/Intermediate/Tf2/Introduction-To-Tf2.html)
 - [ROS 2 Navigation](https://github.com/ros-navigation/navigation2/) Framework and System
 - [Slam Toolbox](https://github.com/SteveMacenski/slam_toolbox) for lifelong mapping and localization in potentially massive maps with ROS
-
----
