@@ -74,16 +74,19 @@ ros2 launch ros2_slam_auto_navigation slam_navigation.launch.py slam_params_file
 
 ## Launch Simulator-SLAM-Navigation-RViz commands individually
 
+1. Launching the Simulation Environment
 ```sh
 ros2 launch ros2_slam_auto_navigation launch_sim.launch.py world_file:=/home/taher/ros2_ws/src/ros2-slam-auto-navigation/worlds/simple.world
 ```
-
+2. Starting the SLAM Toolbox (Online, Asynchronous Mode)
 ```sh
 ros2 launch slam_toolbox online_async_launch.py slam_params_file:=/home/taher/ros2_ws/src/echo-bot-main/echo_bot_pkg/config/mapper_params_online_async.yaml use_sim_time:=true
 ```
+3. Initializing the Navigation Stack
 ```sh
 ros2 launch nav2_bringup navigation_launch.py use_sim_time:=True
 ```
+4. Opening RViz with Navigation Visualization
 ```sh
 ros2 run rviz2 rviz2 use_sim_time:=True -d /opt/ros/humble/share/nav2_bringup/rviz/nav2_default_view.rviz
 ```
