@@ -81,7 +81,7 @@ ros2 launch ros2_slam_auto_navigation launch_sim.launch.py world_file:=/home/tah
 ```
 2. Starting the SLAM Toolbox (Online, Asynchronous Mode)
 ```sh
-ros2 launch slam_toolbox online_async_launch.py slam_params_file:=/home/taher/ros2_ws/src/echo-bot-main/echo_bot_pkg/config/mapper_params_online_async.yaml use_sim_time:=true
+ros2 launch slam_toolbox online_async_launch.py slam_params_file:=/home/taher/ros2_ws/src/ros2-slam-auto-navigation/config/mapper_params_online_async.yaml use_sim_time:=true
 ```
 3. Initializing the Navigation Stack
 ```sh
