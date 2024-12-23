@@ -25,7 +25,7 @@
 
     <gazebo>
         <plugin name="gazebo_ros2_control" filename="libgazebo_ros2_control.so">
-            <parameters>$(find echo_bot_pkg)/config/my_controller.yaml</parameters>
+            <parameters>$(find ros2_slam_auto_navigation)/config/my_controller.yaml</parameters>
         </plugin>
     </gazebo>
 
