@@ -58,13 +58,13 @@ source install/setup.bash
 Run the Gazebo simulation environment and spawn the robot:
 
 ```sh
-ros2 launch ros2_slam_auto_navigation launch_sim.launch.py world_file:=/home/taher/ros2_ws/src/ros2-slam-auto-navigation/worlds/simple.world
+ros2 launch ros2_slam_auto_navigation launch_sim.launch.py world_file:=/home/liurenyu/ros2_ws/src/lry-ros2-slam-auto-navigation/worlds/simple.world
 ```
 
 2. **Launch SLAM and Navigation**
 In a new terminal (with the workspace sourced), launch the SLAM Toolbox and Nav2 bringup with Rviz:
 ```sh
-ros2 launch ros2_slam_auto_navigation slam_navigation.launch.py slam_params_file:=/home/taher/ros2_ws/src/ros2-slam-auto-navigation/config/mapper_params_online_async.yaml use_sim_time:=true
+ros2 launch ros2_slam_auto_navigation slam_navigation.launch.py slam_params_file:=/home/liurenyu/ros2_ws/src/lry-ros2-slam-auto-navigation/config/mapper_params_online_async.yaml use_sim_time:=true
 ```
 
 3. **Use Rviz2 for Visualization:** Rviz2 should start automatically from the second launch file. In Rviz2:
@@ -77,11 +77,11 @@ ros2 launch ros2_slam_auto_navigation slam_navigation.launch.py slam_params_file
 
 1. Launching the Simulation Environment
 ```sh
-ros2 launch ros2_slam_auto_navigation launch_sim.launch.py world_file:=/home/taher/ros2_ws/src/ros2-slam-auto-navigation/worlds/simple.world
+ros2 launch ros2_slam_auto_navigation launch_sim.launch.py world_file:=/home/liurenyu/ros2_ws/src/lry-ros2-slam-auto-navigation/worlds/simple.world
 ```
 2. Starting the SLAM Toolbox (Online, Asynchronous Mode)
 ```sh
-ros2 launch slam_toolbox online_async_launch.py slam_params_file:=/home/taher/ros2_ws/src/ros2-slam-auto-navigation/config/mapper_params_online_async.yaml use_sim_time:=true
+ros2 launch slam_toolbox online_async_launch.py slam_params_file:=/home/liurenyu/ros2_ws/src/lry-ros2-slam-auto-navigation/config/mapper_params_online_async.yaml use_sim_time:=true
 ```
 3. Initializing the Navigation Stack
 ```sh
@@ -90,6 +90,11 @@ ros2 launch nav2_bringup navigation_launch.py use_sim_time:=True
 4. Opening RViz with Navigation Visualization
 ```sh
 ros2 run rviz2 rviz2 use_sim_time:=True -d /opt/ros/humble/share/nav2_bringup/rviz/nav2_default_view.rviz
+```
+
+## Save map
+```sh
+ros2 service call /slam_toolbox/save_map slam_toolbox/srv/SaveMap   "{name: {data: '/home/liurenyu/ros2_ws/my_slam_map'}}"
 ```
 
 ## Troubleshooting

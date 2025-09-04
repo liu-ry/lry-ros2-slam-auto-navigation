@@ -9,10 +9,12 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 
 from launch_ros.actions import Node
 
+################## !!! 功能：启动 Gazebo 仿真环境、机器人模型及控制器。 !!! ##################
 def generate_launch_description():
     # Define the package name for easier reference
     package_name = 'ros2_slam_auto_navigation'
 
+    ###（1）### 声明 world_file 参数，指定 Gazebo 世界文件（默认加载 simple.world） ######
     # Declare the 'world_file' launch argument
     # This allows the user to specify the path to the Gazebo world file to be loaded
     declare_world_file_cmd = DeclareLaunchArgument(
@@ -24,6 +26,7 @@ def generate_launch_description():
     # Access the 'world_file' argument during runtime using LaunchConfiguration
     world_file = LaunchConfiguration('world_file')
 
+    ###（2）### 包含 rsp.launch.py 以发布机器人 URDF 模型（robot_state_publisher） ######
     # Include the Robot State Publisher (RSP) launch file
     # This sets up the robot's description (URDF) and enables simulation time and ROS 2 control
     rsp = IncludeLaunchDescription(
@@ -33,6 +36,7 @@ def generate_launch_description():
         launch_arguments={'use_sim_time': 'true', 'use_ros2_control': 'true'}.items()
     )
 
+    ###（3）### 启动 twist_mux 节点，用于管理多源速度指令（如导航指令与摇杆指令），并将输出映射到机器人控制器话题 /diff_cont/cmd_vel_unstamped ######
     # Specify the Twist Mux configuration file path
     # Twist Mux is used to manage velocity command inputs from different sources
     twist_mux_params = os.path.join(get_package_share_directory(package_name), 'config', 'twist_mux.yaml')
@@ -46,6 +50,7 @@ def generate_launch_description():
         remappings=[('/cmd_vel_out', '/diff_cont/cmd_vel_unstamped')]
     )
 
+    ###（4）### 加载 Gazebo 仿真环境，通过 gazebo_ros 插件启动模拟器，并传入配置文件 gazebo_params.yaml ######
     # Specify the Gazebo parameters configuration file path
     gazebo_params_file = os.path.join(get_package_share_directory(package_name), 'config', 'gazebo_params.yaml')
 
@@ -62,6 +67,7 @@ def generate_launch_description():
         }.items()
     )
 
+    ###（5）### 生成 spawn_entity 节点，在 Gazebo 中 spawn 机器人模型 ######
     # Node to spawn the robot entity in Gazebo
     # The 'robot_description' topic contains the robot's URDF model
     spawn_entity = Node(
@@ -71,6 +77,7 @@ def generate_launch_description():
         output='screen'
     )
 
+    ###（6）### 启动控制器：diff_drive_controller（差速驱动控制）和 joint_state_broadcaster（关节状态发布） ######
     # Launch the diff_drive_controller for controlling the robot's differential drive system
     diff_drive_spawner = Node(
         package="controller_manager",

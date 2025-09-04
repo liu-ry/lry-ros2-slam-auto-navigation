@@ -15,54 +15,55 @@ slam_toolbox:
     base_frame: base_footprint
     scan_topic: /scan
     use_map_saver: true
-    #mode: mapping
-    mode: localization
+    mode: mapping
+    # mode: localization
     
 
     # if you'd like to immediately start continuing a map at a given pose
     # or at the dock, but they are mutually exclusive, if pose is given
     # will use pose
-    map_file_name: /home/taher/ros2_ws/project_map
+    map_file_name: /home/liurenyu/ros2_ws/project_map
     # map_start_pose: [0.0, 0.0, 0.0]
     map_start_at_dock: true
 
-    debug_logging: false
-    throttle_scans: 1
-    transform_publish_period: 0.02 #if 0 never publishes odometry
-    map_update_interval: 5.0
-    resolution: 0.05
-    max_laser_range: 20.0 #for rastering images
-    minimum_time_interval: 0.5
-    transform_timeout: 0.2
-    tf_buffer_duration: 30.
-    stack_size_to_use: 40000000 #// program needs a larger stack size to serialize large maps
-    enable_interactive_mode: true
+    debug_logging: false  # 是否输出调试日志（true 会打印详细信息，影响性能）                  
+    throttle_scans: 1 # 激光雷达数据降频（1 表示不降频，n 表示每 n 帧取 1 帧）
+    transform_publish_period: 0.02 # 坐标变换发布周期（秒），0 表示不发布
+    map_update_interval: 5.0 # 地图更新周期（秒），每隔多久更新一次全局地图
+    resolution: 0.05 # 地图分辨率（米/像素），0.05 表示 1 像素 = 5 厘米     TODO：有待修改
+    max_laser_range: 20.0 # 激光雷达最大有效距离（用于地图栅格化） TODO：  ？？？关注
+    minimum_time_interval: 0.5   # 两次地图更新的最小时间间隔（秒）
+    transform_timeout: 0.2  # TF 坐标变换的超时时间（秒）
+    tf_buffer_duration: 30.  # TF 缓存时长（秒），保存 30 秒内的坐标变换
+    stack_size_to_use: 40000000  # 程序栈大小（用于序列化大型地图，避免内存溢出）
+    enable_interactive_mode: true   # 是否允许交互式操作（如 RViz 中手动调整位姿）
 
     # General Parameters
-    use_scan_matching: true
-    use_scan_barycenter: true
-    minimum_travel_distance: 0.5
-    minimum_travel_heading: 0.5
-    scan_buffer_size: 10
-    scan_buffer_maximum_scan_distance: 10.0
-    link_match_minimum_response_fine: 0.1  
-    link_scan_maximum_distance: 1.5
-    loop_search_maximum_distance: 3.0
-    do_loop_closing: true 
-    loop_match_minimum_chain_size: 10           
-    loop_match_maximum_variance_coarse: 3.0  
-    loop_match_minimum_response_coarse: 0.35    
-    loop_match_minimum_response_fine: 0.45
+    use_scan_matching: true   # 是否使用扫描匹配（提高位姿估计精度）
+    use_scan_barycenter: true   # 是否使用扫描重心（优化激光点云的匹配参考点）
+    minimum_travel_distance: 0.5   # 触发地图更新的最小移动距离（米）
+    minimum_travel_heading: 0.5   # 触发地图更新的最小旋转角度（弧度）
+    scan_buffer_size: 10   # 缓存的激光扫描数据数量
+    scan_buffer_maximum_scan_distance: 10.0   # 缓存激光数据的最大距离（米）
+    link_match_minimum_response_fine: 0.1   # 精细匹配的最小响应值（越高匹配越严格）
+    link_scan_maximum_distance: 1.5   # 连续扫描间的最大允许距离（米）
+    # 回环检测参数（Loop Closing）
+    loop_search_maximum_distance: 3.0   # 回环检测的最大搜索距离（米）
+    do_loop_closing: true   # 是否启用回环检测（修正累积误差的核心）
+    loop_match_minimum_chain_size: 10        # 触发回环检测的最小轨迹长度（帧）   
+    loop_match_maximum_variance_coarse: 3.0   # 粗匹配的最大方差（控制搜索范围）
+    loop_match_minimum_response_coarse: 0.35    # 粗匹配的最小响应值
+    loop_match_minimum_response_fine: 0.45   # 精细匹配的最小响应值
 
     # Correlation Parameters - Correlation Parameters
-    correlation_search_space_dimension: 0.5
-    correlation_search_space_resolution: 0.01
-    correlation_search_space_smear_deviation: 0.1 
+    correlation_search_space_dimension: 0.5    # 搜索空间大小（米）
+    correlation_search_space_resolution: 0.01   # 搜索空间分辨率（米）
+    correlation_search_space_smear_deviation: 0.1   # 搜索时的平滑偏差
 
     # Correlation Parameters - Loop Closure Parameters
-    loop_search_space_dimension: 8.0
-    loop_search_space_resolution: 0.05
-    loop_search_space_smear_deviation: 0.03
+    loop_search_space_dimension: 8.0   # 回环搜索空间大小（米）
+    loop_search_space_resolution: 0.05   # 回环搜索分辨率（米）
+    loop_search_space_smear_deviation: 0.03   # 回环搜索的平滑偏差
 
     # Scan Matcher Parameters
     distance_variance_penalty: 0.5      
