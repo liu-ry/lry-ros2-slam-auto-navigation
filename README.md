@@ -93,8 +93,13 @@ ros2 run rviz2 rviz2 use_sim_time:=True -d /opt/ros/humble/share/nav2_bringup/rv
 ```
 
 ## Save map
+1. 生成通用栅格地图（用于导航、可视化、跨工具通用）
 ```sh
 ros2 service call /slam_toolbox/save_map slam_toolbox/srv/SaveMap   "{name: {data: '/home/liurenyu/ros2_ws/my_slam_map'}}"
+```
+2. 生成 SLAM 算法专用的位姿图数据（用于 SLAM 算法的地图加载、续建、定位）
+```sh
+ros2 service call /slam_toolbox/serialize_map slam_toolbox/srv/SerializePoseGraph "{filename: '/home/liurenyu/ros2_ws/my_slam_map'}"}
 ```
 
 ## Troubleshooting
